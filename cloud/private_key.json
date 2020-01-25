@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "boilermake-2020-266204",
+  "private_key_id": "73f3cb6dfebeb3961ff74786a2d4de3d3fb5ce9c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDz5v6nhwNAkhVz\n2UoDKDN3GqE435zNQR619MBpzYuju9d0OKFCSPIRKRe4Yh5Kmgg51nETn7DH2NSY\nTQQ6el+7nfto55sWyvS6HYessFCRl4N422K99pAnS435mZCpj7uxeju6OdAz/B3Z\nOKJifB4Cx45esvYxbwgOrgyZZe4ebEXf5m1+E7MZY2I4YLItI6N68+RToJjLofE/\nPkTfkMqBr9Us8YLjxd7Utp4NI+dGtV+lYbLo3dk5oIr+Y6vXx7hUiDQbv0cRYhB9\nMPWDX7KR2sahUu0tRlQ/rcbFxgQB9q/TBsoAPbAbRLYs/FSW5ph5GL7dzwdzU64r\nREz45qzDAgMBAAECggEAGbZncEfWeu8rncvxdoW9bzf6eSFxyV2tHCeSRVUq/Hbo\nDtONhIxmIJMBcim94cV9SoOl5hi2rUrZlri/0l5mS0QrZfLMsclxpVFJpVXtGHwt\nmwcd0ML2jX30mLSswINrmRk2xLoljeVtTCIhVFqbW1WoV6lsNOfspIeKwn0xbjlt\nMEUBSNH4s5qXVR/06YwqmouRUnzEhw/hoEVcNEl4k58z1HgpqlxMAvlXMs7csgVc\n1vq82s7tfkQt8sg1Y16P2gBHGIcuYzdzkQ2gbRoMmX/aOpBP8n8x9E9wY8h5Ndnz\nnMkMPP+T73rqnlWCVC8XGe+G+Tu8NjnjNtWJe4s4SQKBgQD8IxJnz4nmhKTHDW2w\nAg6I+KGEG9z9eAJLPNBBRW/oqsL2YcLsV22bbK4cPGxHSkflxeFhCn82pqr5g1/T\nuzfSzqRvTA7InUz9C/2AbG+L7cyNKXRtkE5MmD8vjS/se+uwLJ+w5dbkFA1Qt1Vz\n02sCveuGsv2I7etMkSj7mcYjrwKBgQD3o5/6pXzipLQfWMXzVA9txzJ6YBMVyyRP\naSQ5RJ8zicnzEurGn7AaOvatm0jRRWIRoUSFr4rnAQTme1e55FE7R7W1SxDox/n/\nhqXJGV2w5xreorg0JJ10kkwRfPRRdnAGej98xjlC2vr+/5iNCPEbV//Lr0HJJcUb\n4NmvX1LJLQKBgQCMXuIyVULKyXILN5incp2w9+rD59dCbfuo83RlwkipWdgs3wRs\nG8hzzS+pnKITlnEspNvy8KseO+/X9aH1+Lb9b/nv1IIughSIlJJPWw9G8d79f+TH\n0p0k22XiDVJu8BapAE7vZyYZ2GgJVegHEd7zqdRkK2YnQ33KJM6SNGwxFQKBgQCO\nWRgU1Bu9jD+d5UGkZaWYzPBPN/rAhE0S+LVB1hhNX98eQrmCAzkPWuWBVcm9wcxl\npfXlgsqtjwBqHGyJBp1LHiVtWQEXThx+rb+OoW4hyja/03lfP8zivVXMl685RIOQ\ntaTY7Hjt3UJ6YiImsAUoWqVHSC7gmT18kPuQu5Ky4QKBgQDl+enuwl6EjkkjIpy7\nMTKL/b0DJICyPwT9dUj2zRgzRjvsCNHqARR+F2Cfi49zx/KfZromriqydQeV46Vq\nZmzxLTgDSPt22hWQ6cZTj8GU1bklmDI88ZdoB5b7L2au3dvVlTo56ph7xoIMF71z\nbSB/AJx6XvTIUSp2WL0R72yyNw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fg72i@boilermake-2020-266204.iam.gserviceaccount.com",
+  "client_id": "112124466236622569316",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fg72i%40boilermake-2020-266204.iam.gserviceaccount.com"
+}
