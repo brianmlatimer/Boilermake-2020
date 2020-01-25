@@ -1,28 +1,67 @@
 package com.boilermake.mwen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    String[] items = {"item 0", "item 1", "item 2", "item 3", "item 4", "item 5", "item 6", "item 7", "item 8", "item 9", "item 10"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // api call make array list
+        ArrayList<Bathroom> bathrooms = new ArrayList<>();
+        bathrooms.add(new Bathroom("Bathroom 0"));
+        bathrooms.add(new Bathroom("Bathroom 1"));
+        bathrooms.add(new Bathroom("Bathroom 2"));
+        bathrooms.add(new Bathroom("Bathroom 3"));
+        bathrooms.add(new Bathroom("Bathroom 4"));
+        bathrooms.add(new Bathroom("Bathroom 5"));
+        bathrooms.add(new Bathroom("Bathroom 6"));
+        bathrooms.add(new Bathroom("Bathroom 7"));
+        bathrooms.add(new Bathroom("Bathroom 8"));
+        bathrooms.add(new Bathroom("Bathroom 9"));
+        bathrooms.add(new Bathroom("Bathroom 10"));
+        bathrooms.add(new Bathroom("Bathroom 11"));
+        bathrooms.add(new Bathroom("Bathroom 12"));
+        bathrooms.add(new Bathroom("Bathroom 13"));
+        bathrooms.add(new Bathroom("Bathroom 14"));
 
         RecyclerView rv = findViewById(R.id.recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(new adapter(this, items));
+        rv.setAdapter(new BathroomAdapter(this, bathrooms));
 
-//        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.main_tool_bar);
-//        setSupportActionBar(toolbar);
+        final com.google.android.material.floatingactionbutton.FloatingActionButton fb = findViewById(R.id.floating_action_button);
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    fb.hide();
+                }
+                else {
+                    fb.show();
+                }
+            }
+        });
 
+        final Intent add_bathroom = new Intent(this, AddBathroomActivity.class);
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(add_bathroom);
+            }
+        });
     }
 }
