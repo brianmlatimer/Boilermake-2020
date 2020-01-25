@@ -1,13 +1,20 @@
 package com.boilermake.mwen;
 
+import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-{
-        @NonNull
+{       Context context;
+        String[] items;
+        public adapter(Context context, String[]items)
+        {
+                this.context=context;
+                this.items=items;
+        }
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 return null;
@@ -20,6 +27,11 @@ public class adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         @Override
         public int getItemCount() {
-                return 0;
+                return items.length;
+        }
+        public class Item extends RecyclerView.ViewHolder {
+                public Item(@NonNull View itemView) {
+                        super(itemView);
+                }
         }
 }
