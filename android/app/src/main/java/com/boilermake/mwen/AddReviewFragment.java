@@ -73,9 +73,7 @@ public class AddReviewFragment extends DialogFragment{
                 DatabaseReference ref = database.getReference(String.format("/rating/\"%s\"/%d",bathroom.name , (int) finalCount));
                 ref.setValue(new Review((int) finalCount, "unknown", Objects.requireNonNull(input.getText()).toString()));
                 assert getFragmentManager() != null;
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                getFragmentManager().popBackStack();
-                transaction.commit();
+                getDialog().dismiss();
             }
         });
     }
