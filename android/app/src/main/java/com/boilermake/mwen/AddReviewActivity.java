@@ -34,7 +34,7 @@ import java.util.Objects;
 public class AddReviewActivity extends AppCompatActivity {
 
     Bathroom bathroom;
-    String currentPhotoPath;
+    String currentPhotoPath = null;
     private static final int REQUEST_IMAGE_CAPTURE = 100;
 
     @Override
@@ -47,7 +47,7 @@ public class AddReviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         String obj_tostring = intent.getStringExtra("obj");
-        long count        = intent.getLongExtra("count", 0);
+        final long count        = intent.getLongExtra("count", 0);
         try {
             assert obj_tostring != null;
             JSONObject obj = new JSONObject(obj_tostring);
@@ -102,8 +102,19 @@ public class AddReviewActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                @SuppressLint("DefaultLocale")
+                String root = String.format("/rating/\"%s\"/%d",bathroom.name,(int) count);
+                DatabaseReference ratingRef = database.getReference(root);
+                ratingRef.setValue(new Review((int) count, "Anonymous", Objects.requireNonNull(input.getText()).toString()));
+
+                // upload picture
+//                StorageReference storageRef = storage.getReference();
+//                StorageReference mountainsRef = storageRef.child("mountains.jpg");
+//                StorageReference mountainImagesRef = storageRef.child("images/mountains.jpg");
+//                mountainsRef.getName().equals(mountainImagesRef.getName());    // true
+//                mountainsRef.getPath().equals(mountainImagesRef.getPath());    // false
+
+                AddReviewActivity.this.onBackPressed();
             }
         });
     }
