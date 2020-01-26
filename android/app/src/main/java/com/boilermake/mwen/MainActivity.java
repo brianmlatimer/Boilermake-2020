@@ -10,6 +10,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,27 +26,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // api call make array list
-        ArrayList<Bathroom> bathrooms = new ArrayList<>();
-        bathrooms.add(new Bathroom("Bathroom 0"));
-        bathrooms.add(new Bathroom("Bathroom 1"));
-        bathrooms.add(new Bathroom("Bathroom 2"));
-        bathrooms.add(new Bathroom("Bathroom 3"));
-        bathrooms.add(new Bathroom("Bathroom 4"));
-        bathrooms.add(new Bathroom("Bathroom 5"));
-        bathrooms.add(new Bathroom("Bathroom 6"));
-        bathrooms.add(new Bathroom("Bathroom 7"));
-        bathrooms.add(new Bathroom("Bathroom 8"));
-        bathrooms.add(new Bathroom("Bathroom 9"));
-        bathrooms.add(new Bathroom("Bathroom 10"));
-        bathrooms.add(new Bathroom("Bathroom 11"));
-        bathrooms.add(new Bathroom("Bathroom 12"));
-        bathrooms.add(new Bathroom("Bathroom 13"));
-        bathrooms.add(new Bathroom("Bathroom 14"));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("/bathroom");
+
+        final ArrayList<Bathroom> bathrooms = new ArrayList<>();
+        final BathroomAdapter adapter = new BathroomAdapter(this, bathrooms);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                adapter.items.clear();
+                for (DataSnapshot i: dataSnapshot.getChildren()) {
+                    Log.v("MWEN", i.getKey());
+                    bathrooms.add(new Bathroom(i.getKey()));
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         RecyclerView rv = findViewById(R.id.recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(new BathroomAdapter(this, bathrooms));
+        rv.setAdapter(adapter);
 
         final com.google.android.material.floatingactionbutton.FloatingActionButton fb = findViewById(R.id.floating_action_button);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {

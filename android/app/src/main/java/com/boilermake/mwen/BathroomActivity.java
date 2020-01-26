@@ -5,10 +5,18 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
@@ -34,39 +44,50 @@ public class BathroomActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Api Request
-        ArrayList<Review> list = new ArrayList<>();
-        list.add(new Review("mwen", "good"));
-        list.add(new Review("mwen", "bad"));
-        list.add(new Review("mwen", "hey nick"));
-        list.add(new Review("what", "hey nick"));
-        list.add(new Review("zach", "hey nick"));
-        list.add(new Review("eww", "okay"));
-        list.add(new Review("bahh", "lol"));
-        list.add(new Review("bahh", "ad;fjal;s jfadsjf;l as;fj a;lfjd;sa j;"));
-        list.add(new Review("bahh", "ad;fjal;s jfadsjf;l as;fj a;lfjd;sa j;"));
-        list.add(new Review("bahh", "ad;fjal;s jfadsjf;l as;fj a;lfjd;sa j;"));
-        list.add(new Review("bahh", "ad;fjal;s jfadsjf;l as;fj a;lfjd;sa j;"));
-        list.add(new Review("bahh", "ad;fjal;s jfadsjf;l as;fj a;lfjd;sa j;"));
-        list.add(new Review("bahh", "ad;fjal;s jfadsjf;l as;fj a;lfjd;sa j;"));
+        final ArrayList<Review> list = new ArrayList<>();
+        final ReviewAdapter adapter = new ReviewAdapter(this, list);
 
         Intent intent = getIntent();
         Bathroom b = null;
         try {
             JSONObject obj = new JSONObject(Objects.requireNonNull(intent.getStringExtra("obj")));
             b   = new Bathroom(obj);
-            Log.v("ACTIVITY_BATHROOM", "hi");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         assert b != null;
+
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String path = String.format("/rating/\"%s\"/", b.name);
+        DatabaseReference myRef = database.getReference(path);
+
         TextView bar_text_view = findViewById(R.id.bathroom_tool_bar_textview);
         bar_text_view.setText(b.name);
 
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.v("GOOD", "good " + dataSnapshot.getChildrenCount());
+                adapter.items.clear();
+                for (DataSnapshot i: dataSnapshot.getChildren()) {
+                    ReviewReturn r = i.getValue(ReviewReturn.class);
+                    assert r != null;
+                    Log.v("HEY", r.username);
+                    list.add(new Review(r));
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         RecyclerView rv = findViewById(R.id.review_recycle_view);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(new ReviewAdapter(this, list));
+        rv.setAdapter(adapter);
 
         final com.google.android.material.floatingactionbutton.FloatingActionButton fb = findViewById(R.id.add_review_to_toliet_fab);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -80,6 +101,15 @@ public class BathroomActivity extends AppCompatActivity {
                 else {
                     fb.show();
                 }
+            }
+        });
+
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddReview dialog = new AddReview();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                dialog.show(ft, AddReview.TAG);
             }
         });
     }
