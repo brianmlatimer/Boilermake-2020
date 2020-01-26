@@ -3,14 +3,10 @@ package com.boilermake.mwen;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
@@ -28,13 +24,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
-
 public class BathroomActivity extends AppCompatActivity {
+
+    long count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +64,7 @@ public class BathroomActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.v("GOOD", "good " + dataSnapshot.getChildrenCount());
                 adapter.items.clear();
+                count = dataSnapshot.getChildrenCount();
                 for (DataSnapshot i: dataSnapshot.getChildren()) {
                     ReviewReturn r = i.getValue(ReviewReturn.class);
                     assert r != null;
@@ -104,12 +99,17 @@ public class BathroomActivity extends AppCompatActivity {
             }
         });
 
+        final Bathroom finalB = b;
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddReview dialog = new AddReview();
+                AddReviewFragment dialog = new AddReviewFragment();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                dialog.show(ft, AddReview.TAG);
+                dialog.show(ft, AddReviewFragment.TAG);
+                Bundle bundle = new Bundle();
+                bundle.putString("obj", finalB.toString());
+                bundle.putLong("count", count);
+                dialog.setArguments(bundle);
             }
         });
     }

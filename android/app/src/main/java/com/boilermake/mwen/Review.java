@@ -1,5 +1,7 @@
 package com.boilermake.mwen;
 
+import android.annotation.SuppressLint;
+
 import androidx.annotation.NonNull;
 
 public class Review {
@@ -9,7 +11,7 @@ public class Review {
     public String review;
 
     public Review(String username, String review) {
-        this.id    = 0;
+        this.id       = 0;
         this.username = username;
         this.review   = review;
     }
@@ -29,6 +31,8 @@ public class Review {
     @NonNull
     @Override
     public String toString() {
-        return String.format("{\"username\": \"%s\", \"review\": \"%s\"}", username, review);
+        @SuppressLint("DefaultLocale")
+        String var =  String.format("{\"username\": \"%s\", \"review\": \"%s\", \"id\": %d}", username, review, id);
+        return var;
     }
 }
