@@ -71,7 +71,7 @@ public class AddReviewFragment extends DialogFragment{
             public void onClick(View v) {
                 @SuppressLint("DefaultLocale")
                 DatabaseReference ref = database.getReference(String.format("/rating/\"%s\"/%d",bathroom.name , (int) finalCount));
-                ref.setValue(new Review((int) finalCount, "unknown", Objects.requireNonNull(input.getText()).toString()));
+                ref.setValue(new Review((int) finalCount, "anonymous", Objects.requireNonNull(input.getText()).toString()));
                 assert getFragmentManager() != null;
                 getDialog().dismiss();
             }

@@ -68,7 +68,6 @@ public class BathroomActivity extends AppCompatActivity {
                 for (DataSnapshot i: dataSnapshot.getChildren()) {
                     ReviewReturn r = i.getValue(ReviewReturn.class);
                     assert r != null;
-                    Log.v("HEY", r.username);
                     list.add(new Review(r));
                 }
                 adapter.notifyDataSetChanged();
