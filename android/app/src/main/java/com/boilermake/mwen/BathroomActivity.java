@@ -101,13 +101,11 @@ public class BathroomActivity extends AppCompatActivity {
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddReviewFragment dialog = new AddReviewFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                dialog.show(ft, AddReviewFragment.TAG);
-                Bundle bundle = new Bundle();
-                bundle.putString("obj", finalB.toString());
-                bundle.putLong("count", count);
-                dialog.setArguments(bundle);
+                Intent intent = new Intent(BathroomActivity.this, AddReviewActivity.class);
+                intent.putExtra("obj", finalB.toString());
+                intent.putExtra("count", count);
+                startActivity(intent);
+
             }
         });
     }

@@ -44,7 +44,6 @@ import static android.app.Activity.RESULT_OK;
 public class AddReviewFragment extends DialogFragment{
 
     static final String TAG = "ADDREVIEW";
-    private static final int REQUEST_IMAGE_CAPTURE = 100;
     private Bathroom bathroom = null;
 
     private String currentPhotoPath;
@@ -58,85 +57,12 @@ public class AddReviewFragment extends DialogFragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Bundle bundle = this.getArguments();
-        String obj_tostring = null;
-        long count = 0;
-        if (bundle != null) {
-            obj_tostring = bundle.getString("obj", "");
-            count        = bundle.getLong("count");
-        }
-        Log.v("MWEN", obj_tostring);
-        try {
-            JSONObject obj = new JSONObject(obj_tostring);
-            bathroom = new Bathroom(obj);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
-        setHasOptionsMenu(true);
-        final com.google.android.material.textfield.TextInputEditText input = getView().findViewById(R.id.add_bathroom_name_textview);
-        FloatingActionButton fb = getView().findViewById(R.id.fab_add_review);
-
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final long finalCount = count;
-        fb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                @SuppressLint("DefaultLocale")
-                DatabaseReference ref = database.getReference(String.format("/rating/\"%s\"/%d",bathroom.name , (int) finalCount));
-                ref.setValue(new Review((int) finalCount, "anonymous", Objects.requireNonNull(input.getText()).toString()));
-                assert getFragmentManager() != null;
-                getDialog().dismiss();
-            }
-        });
-
-        MaterialButton button = getView().findViewById(R.id.material_button_take_pic);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity((Objects.requireNonNull(getContext()).getPackageManager())) != null) {
-                    startActivityForResult(intent, 0);
-                    File photo = null;
-                    try {
-                        // add the name here
-                        photo = createImageFile();
-                    } catch (IOException ex) {
-                        // catch error
-                    }
-
-                    if (photo != null) {
-                        Uri photoUri = FileProvider.getUriForFile(getContext(), "com.boilermake.android.fileprovider", photo);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                    }
-                }
-
-            }
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-
-        }
     }
 
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
+
+
 
 
     @Override
