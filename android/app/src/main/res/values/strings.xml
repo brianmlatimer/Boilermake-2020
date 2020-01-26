@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">LooCation</string>
-    <string name="title_activity_add_bathroom">Add a Bathroom</string>
+    <string name="app_name">LooCation: Nearby Restrooms</string>
+    <string name="title_activity_add_bathroom">Add a Restroom</string>
     <string name="bathroom_name">Building | Room Number | Gender</string>
-    <string name="bathroom_review">Bathroom\ Thoughts?</string>
+    <string name="bathroom_review">Restroom\ Thoughts?</string>
     <string name="title_activity_bathroom">activity_bathroom</string>
 </resources>
