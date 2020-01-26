@@ -35,12 +35,20 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddReviewFragment extends DialogFragment{
 
-    public static final String TAG = "ADDREVIEW";
-    Bathroom bathroom = null;
+    static final String TAG = "ADDREVIEW";
+    private static final int REQUEST_IMAGE_CAPTURE = 100;
+    private Bathroom bathroom = null;
+
+    private String currentPhotoPath;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,19 +99,18 @@ public class AddReviewFragment extends DialogFragment{
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (intent.resolveActivity((Objects.requireNonNull(getContext()).getPackageManager())) != null) {
+                    startActivityForResult(intent, 0);
                     File photo = null;
                     try {
                         // add the name here
-                        Log.v("MWEN", "creating temp photo");
                         photo = createImageFile();
                     } catch (IOException ex) {
                         // catch error
                     }
 
                     if (photo != null) {
-                        Uri photoUri = FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", photo);
+                        Uri photoUri = FileProvider.getUriForFile(getContext(), "com.boilermake.android.fileprovider", photo);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                        startActivityForResult(intent, 0);
                     }
                 }
 
@@ -111,15 +118,23 @@ public class AddReviewFragment extends DialogFragment{
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+        }
+    }
+
+
     private File createImageFile() throws IOException {
         // Create an image file name
-        String img_name = System.currentTimeMillis() + "-loocation";
-
-        File storageDir = Objects.requireNonNull(getContext()).getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(img_name, ".jpg", storageDir);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
         // Save a file: path for use with ACTION_VIEW intents
-        String currentPhotoPath = image.getAbsolutePath();
+        currentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
