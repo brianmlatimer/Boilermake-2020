@@ -1,17 +1,22 @@
 package com.boilermake.mwen;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,6 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class AddReviewFragment extends DialogFragment{
@@ -76,6 +84,43 @@ public class AddReviewFragment extends DialogFragment{
                 getDialog().dismiss();
             }
         });
+
+        MaterialButton button = getView().findViewById(R.id.material_button_take_pic);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity((Objects.requireNonNull(getContext()).getPackageManager())) != null) {
+                    File photo = null;
+                    try {
+                        // add the name here
+                        Log.v("MWEN", "creating temp photo");
+                        photo = createImageFile();
+                    } catch (IOException ex) {
+                        // catch error
+                    }
+
+                    if (photo != null) {
+                        Uri photoUri = FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", photo);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                        startActivityForResult(intent, 0);
+                    }
+                }
+
+            }
+        });
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String img_name = System.currentTimeMillis() + "-loocation";
+
+        File storageDir = Objects.requireNonNull(getContext()).getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(img_name, ".jpg", storageDir);
+
+        // Save a file: path for use with ACTION_VIEW intents
+        String currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
 

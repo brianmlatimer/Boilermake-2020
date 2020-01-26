@@ -36,7 +36,7 @@ public class AddBathroomActivity extends AppCompatActivity {
 
                 @SuppressLint("DefaultLocale")
                 DatabaseReference ratingRef = database.getReference(String.format("/rating/\"%s\"/%d",name.getText().toString(),0));
-                ratingRef.setValue(new Review("unknown", Objects.requireNonNull(review.getText()).toString()));
+                ratingRef.setValue(new Review("Anonymous", Objects.requireNonNull(review.getText()).toString()));
 
                 AddBathroomActivity.this.onBackPressed();
             }

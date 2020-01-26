@@ -62,7 +62,6 @@ public class BathroomActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.v("GOOD", "good " + dataSnapshot.getChildrenCount());
                 adapter.items.clear();
                 count = dataSnapshot.getChildrenCount();
                 for (DataSnapshot i: dataSnapshot.getChildren()) {

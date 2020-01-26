@@ -31,7 +31,7 @@
         <com.google.android.material.button.MaterialButton
             android:padding="10dp"
             android:layout_margin="10dp"
-            android:id="@+id/material_button"
+            android:id="@+id/material_button_take_pic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Take Picture"/>
