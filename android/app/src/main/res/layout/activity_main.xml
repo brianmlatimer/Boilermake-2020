@@ -5,18 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
+    android:gravity="center"
     android:orientation="vertical">
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:background="#00000000"
         android:id="@+id/recyclerview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="match_parent"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:background="@color/colorPrimary"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
@@ -31,6 +33,7 @@
                 android:textStyle="bold"
                 android:textColor="#FFF"
                 android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"/>
         </androidx.appcompat.widget.Toolbar>
@@ -41,6 +44,7 @@
         android:id="@+id/floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_gravity="bottom|end"
         app:fabSize="normal"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
