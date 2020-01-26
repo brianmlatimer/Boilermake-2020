@@ -44,12 +44,14 @@
         android:id="@+id/floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="bottom|end"
+        android:background="@drawable/plus"
         app:fabSize="normal"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         app:showMotionSpec="@android:anim/accelerate_decelerate_interpolator"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/plus"
+        />
 
 <!--    app:srcCompat="@drawable/ic_plus_24"-->
 
