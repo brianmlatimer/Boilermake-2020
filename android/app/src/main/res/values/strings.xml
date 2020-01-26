@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Loo-Cation</string>
-    <string name="title_activity_add_bathroom">AddBathroom</string>
-    <string name="bathroom_name">Building / Room Number / Gender</string>
+    <string name="app_name">LooCation</string>
+    <string name="title_activity_add_bathroom">Add a Bathroom</string>
+    <string name="bathroom_name">Building | Room Number | Gender</string>
     <string name="bathroom_review">Bathroom\ Thoughts?</string>
     <string name="title_activity_bathroom">activity_bathroom</string>
 </resources>
